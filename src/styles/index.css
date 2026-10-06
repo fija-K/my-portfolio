@@ -1,0 +1,404 @@
+@import './themeTokens.css';
+
+/* ==========================================================================
+   GLOBAL UTILITIES, MICRO-ANIMATIONS & RESPONSIVE LAYOUTS
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Page Tab Transition Animation */
+.main-content > div {
+  animation: subtleFade 0.22s ease-out;
+}
+
+@keyframes subtleFade {
+  from {
+    opacity: 0.85;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .main-content > div,
+  .bunny-idle,
+  .cyber-glitch,
+  .crt-overlay {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* CRT Scanlines Overlay for Dark Mode */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+  opacity: var(--scanline-opacity);
+  transition: opacity var(--transition-normal);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-xs);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-focus);
+}
+
+/* Layout Containers */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem 1rem;
+}
+
+/* ==========================================================================
+   REFERENCE COMPOSITION GRID SYSTEM
+   ========================================================================== */
+
+/* Three Column Personal Site Layout (Light Mode Reference & Mobile Responsive) */
+.grid-3col-personal {
+  display: grid;
+  grid-template-columns: 220px 1fr 240px;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* Dark Mode Asymmetrical Layout */
+.grid-dark-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 220px;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 1050px) {
+  .grid-3col-personal,
+  .grid-dark-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Standard Dense Grid Utility */
+.grid-layout-dense {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.col-12 { grid-column: span 12; }
+.col-8  { grid-column: span 8; }
+.col-7  { grid-column: span 7; }
+.col-6  { grid-column: span 6; }
+.col-5  { grid-column: span 5; }
+.col-4  { grid-column: span 4; }
+.col-3  { grid-column: span 3; }
+
+@media (max-width: 900px) {
+  .col-8, .col-7, .col-6, .col-5, .col-4, .col-3 {
+    grid-column: span 12;
+  }
+}
+
+/* Retro Window Styling */
+.retro-window {
+  background: var(--bg-window);
+  border: var(--window-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--window-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.retro-window:hover {
+  transform: translateY(-2px);
+}
+
+.retro-window-header {
+  background: var(--header-grad);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.45rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.retro-window-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.retro-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.window-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.window-btn:hover {
+  border-color: var(--border-focus);
+}
+
+[data-theme="dark"] .window-btn-close {
+  background: #ff2a55;
+  border-color: #ff003c;
+  color: #ffffff;
+}
+
+[data-theme="light"] .window-btn-close {
+  background: #ff85a2;
+  border-color: #e64980;
+  color: #ffffff;
+}
+
+.retro-window-body {
+  padding: 1.15rem;
+  flex: 1;
+}
+
+/* ==========================================================================
+   POLAROID, STICKY NOTE & REFERENCE SPECIALTY UTILITIES
+   ========================================================================== */
+
+/* Polaroid Frame for Light Mode Welcome Hero */
+.polaroid-frame {
+  background: #ffffff;
+  border: 1px solid #f7a8c4;
+  padding: 0.5rem 0.5rem 1rem 0.5rem;
+  box-shadow: 2px 3px 8px rgba(230, 73, 128, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 70px;
+  height: 18px;
+  background: rgba(255, 182, 193, 0.7);
+  border: 1px dashed #e64980;
+  z-index: 5;
+}
+
+/* Yellow Lined Scrapbook Sticky Note (Currently Box in Light Mode) */
+.sticky-note-yellow {
+  background: #fffde7;
+  border: 1px solid #ffe082;
+  padding: 1rem;
+  border-radius: 2px;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.06);
+  position: relative;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 23px,
+    #ffecb3 24px
+  );
+}
+
+/* Scallop Lace Footer Border for Light Mode */
+[data-theme="light"] footer {
+  border-top: 3px dashed var(--border-focus) !important;
+  background: var(--bg-secondary) !important;
+}
+
+/* Mini Calendar Grid (Right Sidebar Light Mode) */
+.mini-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.calendar-day-active {
+  background: var(--accent-red);
+  color: #ffffff !important;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Badges & Buttons */
+.retro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--badge-bg);
+  border: var(--badge-border);
+  color: var(--badge-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+}
+
+.retro-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+}
+
+.retro-btn-primary {
+  background: var(--accent-red);
+  color: #ffffff;
+  border: 1px solid var(--border-bright);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.retro-btn-primary:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.retro-btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.retro-btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+/* Web 1.0 Hit Counter */
+.hit-counter-box {
+  display: inline-flex;
+  align-items: center;
+  background: var(--hit-counter-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--hit-counter-text);
+  letter-spacing: 1px;
+}
+
+/* Scrapbook Decorative Stickers */
+[data-theme="light"] .scrapbook-sticker {
+  display: inline-block;
+  background: #fff;
+  border: 1px dashed var(--accent-pink);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  color: var(--text-accent);
+  transform: rotate(-1.5deg);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] .scrapbook-sticker {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-focus);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  color: var(--text-accent-secondary);
+  font-family: var(--font-mono);
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  max-width: 750px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
