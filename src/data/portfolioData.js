@@ -208,7 +208,7 @@ export const projectsData = [
     results: null,
     futurePlans: [],
     screenshots: [],
-    github: "https://github.com/fija-K/setu",
+    github: "https://github.com/fija-K/setu",  // confirmed repo
     liveDemo: null,
     additionalNotes: ["Built as a hackathon prototype"],
     thumbnailTag: "CIVIC_PLATFORM"
@@ -257,7 +257,7 @@ export const projectsData = [
     results: null,
     futurePlans: [],
     screenshots: [],
-    github: "https://github.com/fija-K/judicial-backlog-triage",
+    github: "https://github.com/fija-K/backlog_triage",
     liveDemo: null,
     additionalNotes: ["Smart India Hackathon (SIH) prototype", "Advisory only — all judicial decisions remain with the judge"],
     thumbnailTag: "AI_LEGAL_SYSTEM"
@@ -301,7 +301,7 @@ export const projectsData = [
     results: null,
     futurePlans: [],
     screenshots: [],
-    github: "https://github.com/fija-K/cdc-intel-platform",
+    github: "https://github.com/fija-K/prototypecdc",
     liveDemo: null,
     additionalNotes: ["Built as a hackathon prototype"],
     thumbnailTag: "EDTECH_DASHBOARD"
